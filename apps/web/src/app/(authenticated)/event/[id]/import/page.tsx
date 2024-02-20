@@ -4,10 +4,12 @@ import { InboxOutlined } from '@ant-design/icons'
 import { Api } from '@web/domain'
 import { PageLayout } from '@web/layouts/Page.layout'
 import { useAuthentication } from '@web/modules/authentication'
-import { Button, Modal, Typography, Upload, message } from 'antd'
+import { Button, Typography, Upload, message } from 'antd'
 import { useParams, useRouter } from 'next/navigation'
 import { useSnackbar } from 'notistack'
+import Papa from 'papaparse'
 import { useState } from 'react'
+
 const { Title, Paragraph } = Typography
 const { Dragger } = Upload
 
@@ -19,37 +21,72 @@ export default function ImportAttendeesPage() {
   const { enqueueSnackbar } = useSnackbar()
   const [fileList, setFileList] = useState([])
 
-  const handleUpload = async options => {
-    const { file } = options
-    try {
-      const url = await Api.Upload.upload(file)
-      setFileList(fileList => [...fileList, { url: url, status: 'done' }])
-      enqueueSnackbar('File uploaded successfully', { variant: 'success' })
-    } catch (error) {
-      enqueueSnackbar('File upload failed', { variant: 'error' })
-    }
+  // Add a new function to handle the file before uploading
+  const beforeUpload = file => {
+    // Update the file list with the new file
+    setFileList([file])
+    // Return false to stop auto uploading because we will handle it manually
+    return false
   }
 
-  const handleImport = async () => {
+  const handleUpload = async file => {
+    const reader = new FileReader()
+
+    reader.onload = async e => {
+      const text = e.target.result
+      Papa.parse(text, {
+        header: true,
+        complete: async function (results) {
+          const attendeesToAdd = results.data
+          const attendeesPromises = attendeesToAdd.map(attendeeData => {
+            const attendee = {
+              firstName: attendeeData.firstName,
+              lastName: attendeeData.lastName,
+              email: attendeeData.email,
+              status: 'pending', // Assuming 'status' is a required field
+              // Add any other fields required by your API
+            }
+            return Api.Attendee.createOneByEventId(params.id, attendee)
+          })
+
+          try {
+            await Promise.all(attendeesPromises)
+            enqueueSnackbar('Attendees imported successfully', {
+              variant: 'success',
+            })
+            router.push(`/event/${params.id}/attendees`)
+          } catch (error) {
+            enqueueSnackbar('Failed to add attendees', {
+              variant: 'error',
+            })
+          }
+        },
+        error: function (error) {
+          enqueueSnackbar('Failed to parse the CSV file', { variant: 'error' })
+        },
+      })
+    }
+
+    reader.onerror = e => {
+      enqueueSnackbar('Error reading file: ' + e.target.error, {
+        variant: 'error',
+      })
+    }
+
+    reader.readAsText(file)
+  }
+
+  const handleImport = () => {
     if (fileList.length === 0) {
       message.error('Please upload a file before importing.')
       return
     }
-    // Assuming the backend can directly import from the uploaded file URL
-    // This part of the code is pseudo and may vary based on the actual API implementation
-    try {
-      // Here you would call an API to import attendees using the file URL
-      // For demonstration, just showing a success message
-      Modal.success({
-        title: 'Import Successful',
-        content: `Attendees have been successfully imported from the file.`,
-      })
-    } catch (error) {
-      Modal.error({
-        title: 'Import Failed',
-        content:
-          'There was an issue importing the attendees. Please try again.',
-      })
+
+    // Ensure that we have a File object before attempting to read
+    if (fileList[0] instanceof File) {
+      handleUpload(fileList[0])
+    } else {
+      message.error('Please select a valid file.')
     }
   }
 
@@ -61,12 +98,15 @@ export default function ImportAttendeesPage() {
         Excel file containing the attendees' information.
       </Paragraph>
       <Dragger
-        fileList={fileList}
-        customRequest={handleUpload}
-        maxCount={1}
-        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        beforeUpload={() => false} // Prevent auto upload
+        name="file" // This is required by Ant Design's Dragger for proper file handling
+        fileList={fileList.map(file => ({
+          uid: file.uid,
+          name: file.name,
+          status: 'done',
+        }))}
+        beforeUpload={beforeUpload}
         onRemove={() => setFileList([])}
+        multiple={false}
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
@@ -79,12 +119,11 @@ export default function ImportAttendeesPage() {
           data or other band files
         </p>
       </Dragger>
-
       <Button
         type="primary"
-        disabled={fileList.length === 0}
         onClick={handleImport}
         style={{ marginTop: 16 }}
+        disabled={fileList.length === 0}
       >
         Import Attendees
       </Button>

@@ -120,6 +120,31 @@ export default function EventAttendeesPage() {
       key: 'email',
     },
     {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: 'Room Number',
+      dataIndex: 'roomNumber',
+      key: 'roomNumber',
+    },
+    {
+      title: 'T-Shirt Size',
+      dataIndex: 'tShirtSize',
+      key: 'tShirtSize',
+    },
+    {
+      title: 'Team Color',
+      dataIndex: 'teamColor',
+      key: 'teamColor',
+    },
+    {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
@@ -220,6 +245,21 @@ export default function EventAttendeesPage() {
             label="Email"
             rules={[{ required: true, type: 'email' }]}
           >
+            <Input />
+          </Form.Item>
+          <Form.Item name="phoneNumber" label="Phone Number">
+            <Input />
+          </Form.Item>
+          <Form.Item name="age" label="Age">
+            <Input />
+          </Form.Item>
+          <Form.Item name="roomNumber" label="Room Number">
+            <Input />
+          </Form.Item>
+          <Form.Item name="tShirtSize" label="T-Shirt Size">
+            <Input />
+          </Form.Item>
+          <Form.Item name="teamColor" label="Team Color">
             <Input />
           </Form.Item>
         </Form>

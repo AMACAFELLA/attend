@@ -1,4 +1,3 @@
-import { ColumnNumeric } from '@server/core/database'
 import {
   Column,
   CreateDateColumn,
@@ -17,47 +16,47 @@ import { Eventattendee } from '../../../modules/eventattendee/domain'
 
 @Entity()
 export class Attendee {
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
-@PrimaryGeneratedColumn('uuid')
+  @Column({})
+  firstName: string
 
-id: string
+  @Column({})
+  lastName: string
 
-@Column({})
+  @Column({})
+  email: string
 
-firstName: string
+  @Column({ nullable: true })
+  phoneNumber: string
 
-@Column({})
+  @Column({ nullable: true })
+  age: string
 
-lastName: string
+  @Column({ nullable: true })
+  roomNumber: string
 
-@Column({})
+  @Column({ nullable: true })
+  tShirtSize: string
 
-email: string
+  @Column({ nullable: true })
+  teamColor: string
 
-@Column({})
+  @Column({})
+  status: string
 
-status: string
+  @Column({})
+  eventId: string
 
-@Column({})
-
-eventId: string
-
-@ManyToOne(
-  () => Event,
-  parent => parent.attendees,
-  )
+  @ManyToOne(() => Event, parent => parent.attendees)
   @JoinColumn({ name: 'eventId' })
+  event?: Event
 
-event?: Event
+  @OneToMany(() => Eventattendee, child => child.attendee)
+  eventattendees?: Eventattendee[]
 
-@OneToMany(
-  () => Eventattendee,
-  child => child.attendee,
-  )
-
-eventattendees?: Eventattendee[]
-
-@CreateDateColumn()
+  @CreateDateColumn()
   dateCreated: string
 
   @UpdateDateColumn()

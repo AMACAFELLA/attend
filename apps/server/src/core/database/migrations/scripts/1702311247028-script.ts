@@ -4,8 +4,7 @@ export class Script1702311247028 implements MigrationInterface {
   name = 'Script1702311247028'
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-
-try {
+    try {
       await queryRunner.query(
         `
         INSERT INTO "user" ("id", "email", "name", "pictureUrl", "status", "password") VALUES ('6d8a074b-eda0-427d-80de-833bceb6bfcb', '1Maryse_Mertz@yahoo.com', 'Bob Johnson', 'https://i.imgur.com/YfJQV5z.png?id=3', 'suspended', '$2b$10$ppubsZypHzkqW9dkhMB97ul2.wSsvaCoDE2CzqIHygddRMKXvpYUC');
@@ -40,16 +39,16 @@ INSERT INTO "event" ("id", "title", "description", "userId") VALUES ('499acc73-0
 INSERT INTO "event" ("id", "title", "description", "userId") VALUES ('c567b561-9b68-43d9-8b4b-6397fc694a3e', 'Global Marketing Summit', 'The biggest tech conference of the year featuring keynote speakers from top tech companies.', 'eaca6082-61e3-4736-b459-457090c09849');
 INSERT INTO "event" ("id", "title", "description", "userId") VALUES ('48ba7aa9-0022-4d5d-9cc4-f14ac115e61f', 'Summer Gala', 'The biggest tech conference of the year featuring keynote speakers from top tech companies.', '0366b6aa-9d27-45d0-9391-7a0fdfdfde36');
 
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('aa8dd874-f518-43a8-8b75-59ff81ef0111', 'John', 'Doe', '163Zane_Bechtelar96@hotmail.com', 'checked in', 'c0d592b9-21c8-4df8-be42-bc6317dbb1ae');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('1b764847-e4a8-4ff1-a7d2-7bf2caebe44c', 'Emily', 'Johnson', '168Roxanne72@gmail.com', 'checked in', '080a0a72-45ef-4b74-b00d-5e3326998096');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('a5b07eac-171d-4318-970f-f3f2e3667fee', 'Alex', 'Johnson', '173Agustina0@gmail.com', 'pending', '48ba7aa9-0022-4d5d-9cc4-f14ac115e61f');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('549ab8c5-c797-4455-b192-c4de357a8ec3', 'Michael', 'Johnson', '178Stanley45@hotmail.com', 'pending', 'c567b561-9b68-43d9-8b4b-6397fc694a3e');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('7ffc1039-07bb-4314-a8f9-c3b75ec1353e', 'Sarah', 'Smith', '183Joel.Bashirian88@gmail.com', 'checked in', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('82d352fb-9b57-443f-bf5e-5e97080b55fb', 'Sarah', 'Johnson', '188Scottie_Hand@hotmail.com', 'checked out', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('61ca42df-cfa6-4cbc-8ca3-e0b78c036331', 'Michael', 'Johnson', '193Elbert_McCullough81@gmail.com', 'checked in', 'c0d592b9-21c8-4df8-be42-bc6317dbb1ae');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('e6e92f13-6b31-4264-8b10-a7a304d7f7e2', 'Michael', 'Doe', '198Avis_Abbott@gmail.com', 'pending', '6f098a29-86bb-482f-bf59-d0b2f7964644');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('aa0781de-1319-4c93-b0e5-e7cacfef3c6b', 'Michael', 'Williams', '203Oma10@hotmail.com', 'pending', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
-INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "status", "eventId") VALUES ('8896404c-dc66-4061-9c3a-d1c02136790a', 'Alex', 'Doe', '208Vicente.Jones@gmail.com', 'checked in', 'd422098a-5ea7-4887-8faf-7b710f40e2fb');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('aa8dd874-f518-43a8-8b75-59ff81ef0111', 'John', 'Doe', '163Zane_Bechtelar96@hotmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked in', 'c0d592b9-21c8-4df8-be42-bc6317dbb1ae');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('1b764847-e4a8-4ff1-a7d2-7bf2caebe44c', 'Emily', 'Johnson', '168Roxanne72@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked in', '080a0a72-45ef-4b74-b00d-5e3326998096');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('a5b07eac-171d-4318-970f-f3f2e3667fee', 'Alex', 'Johnson', '173Agustina0@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'pending', '48ba7aa9-0022-4d5d-9cc4-f14ac115e61f');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('549ab8c5-c797-4455-b192-c4de357a8ec3', 'Michael', 'Johnson', '178Stanley45@hotmail.com', '1234567891', '22', '01', 'M', 'Blue', 'pending', 'c567b561-9b68-43d9-8b4b-6397fc694a3e');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('7ffc1039-07bb-4314-a8f9-c3b75ec1353e', 'Sarah', 'Smith', '183Joel.Bashirian88@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked in', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('82d352fb-9b57-443f-bf5e-5e97080b55fb', 'Sarah', 'Johnson', '188Scottie_Hand@hotmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked out', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('61ca42df-cfa6-4cbc-8ca3-e0b78c036331', 'Michael', 'Johnson', '193Elbert_McCullough81@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked in', 'c0d592b9-21c8-4df8-be42-bc6317dbb1ae');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('e6e92f13-6b31-4264-8b10-a7a304d7f7e2', 'Michael', 'Doe', '198Avis_Abbott@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'pending', '6f098a29-86bb-482f-bf59-d0b2f7964644');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('aa0781de-1319-4c93-b0e5-e7cacfef3c6b', 'Michael', 'Williams', '203Oma10@hotmail.com', '1234567891', '22', '01', 'M', 'Blue', 'pending', '69953c4a-72f8-45a7-a247-5d0e6b37f9fb');
+INSERT INTO "attendee" ("id", "firstName", "lastName", "email", "phoneNumber", "age", "roomNumber", "tShirtSize", "teamColor", "status", "eventId") VALUES ('8896404c-dc66-4061-9c3a-d1c02136790a', 'Alex', 'Doe', '208Vicente.Jones@gmail.com', '1234567891', '22', '01', 'M', 'Blue', 'checked in', 'd422098a-5ea7-4887-8faf-7b710f40e2fb');
 
 INSERT INTO "eventattendee" ("id", "checkInTime", "checkOutTime", "eventId", "attendeeId") VALUES ('a2b09ceb-0660-460c-b2e1-96a43c6f2dec', '2024-01-01T14:27:05.239Z', '2024-04-09T01:17:19.619Z', 'c0d592b9-21c8-4df8-be42-bc6317dbb1ae', 'e6e92f13-6b31-4264-8b10-a7a304d7f7e2');
 INSERT INTO "eventattendee" ("id", "checkInTime", "checkOutTime", "eventId", "attendeeId") VALUES ('01754467-ce46-488b-a038-23b0df5f8a45', '2024-11-10T16:21:06.762Z', '2024-09-15T06:18:15.762Z', '499acc73-0f02-4609-a510-38611bb4ef19', '1b764847-e4a8-4ff1-a7d2-7bf2caebe44c');
@@ -66,8 +65,7 @@ INSERT INTO "eventattendee" ("id", "checkInTime", "checkOutTime", "eventId", "at
     } catch (error) {
       // ignore
     }
-
-}
+  }
 
   public async down(queryRunner: QueryRunner): Promise<void> {}
 }

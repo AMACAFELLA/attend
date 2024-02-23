@@ -1,95 +1,109 @@
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator'
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class AttendeeCreateDto {
-
-@IsString()
-
-@IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
   firstName: string
 
-@IsString()
-
-@IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
   lastName: string
 
-@IsString()
-
-@IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
   email: string
 
-@IsString()
+  @IsString()
+  @IsNotEmpty()
+  phoneNumber: string
 
-@IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
+  age: string
+
+  @IsString()
+  @IsNotEmpty()
+  roomNumber: string
+
+  @IsString()
+  @IsNotEmpty()
+  tShirtSize: string
+
+  @IsString()
+  @IsNotEmpty()
+  teamColor: string
+
+  @IsString()
+  @IsNotEmpty()
   status: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   eventId?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateCreated?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateDeleted?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateUpdated?: string
-
 }
 
 export class AttendeeUpdateDto {
-
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   firstName?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   lastName?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   email?: string
 
-@IsString()
+  @IsString()
+  @IsOptional()
+  phoneNumber?: string
 
-@IsOptional()
+  @IsString()
+  @IsOptional()
+  age?: string
+
+  @IsString()
+  @IsOptional()
+  roomNumber?: string
+
+  @IsString()
+  @IsOptional()
+  tShirtSize?: string
+
+  @IsString()
+  @IsOptional()
+  teamColor?: string
+
+  @IsString()
+  @IsOptional()
   status?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   eventId?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateCreated?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateDeleted?: string
 
-@IsString()
-
-@IsOptional()
+  @IsString()
+  @IsOptional()
   dateUpdated?: string
-
 }

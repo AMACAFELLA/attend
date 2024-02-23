@@ -1,31 +1,37 @@
+import { Event } from '../event'
 
-
-import { Event } from "../event"
-
-import { Eventattendee } from "../eventattendee"
+import { Eventattendee } from '../eventattendee'
 
 export class Attendee {
+  id: string
 
-id: string
+  firstName: string
 
-firstName: string
+  lastName: string
 
-lastName: string
+  email: string
 
-email: string
+  phoneNumber: string
 
-status: string
+  age: string
 
-eventId: string
+  roomNumber: string
 
-event?: Event
+  tShirtSize: string
 
-dateCreated: string
+  teamColor: string
 
-dateDeleted: string
+  status: string
 
-dateUpdated: string
+  eventId: string
 
-eventattendees?: Eventattendee[]
+  event?: Event
 
+  dateCreated: string
+
+  dateDeleted: string
+
+  dateUpdated: string
+
+  eventattendees?: Eventattendee[]
 }

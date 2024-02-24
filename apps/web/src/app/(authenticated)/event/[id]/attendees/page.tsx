@@ -3,7 +3,12 @@
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
+  HomeOutlined,
+  MailOutlined,
+  PhoneOutlined,
   SearchOutlined,
+  SkinOutlined,
+  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import { Api } from '@web/domain'
@@ -14,11 +19,13 @@ import {
   Form,
   Input,
   Modal,
+  Select,
   Space,
   Table,
   Tag,
   Typography,
 } from 'antd'
+import { Option } from 'antd/es/mentions'
 import { useParams, useRouter } from 'next/navigation'
 import { useSnackbar } from 'notistack'
 import React, { useEffect, useState } from 'react'
@@ -118,31 +125,67 @@ export default function EventAttendeesPage() {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+      render: (text: string, record: any) => (
+        <Space>
+          <MailOutlined />
+          <a href={`mailto:${record.email}`}>{record.email}</a>
+        </Space>
+      ),
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
+      render: (text: string, record: any) => (
+        <Space>
+          <PhoneOutlined />
+          <a href={`tel:${record.phoneNumber}`}>{record.phoneNumber}</a>
+        </Space>
+      ),
     },
     {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
+      render: (text: string, record: any) => (
+        <Space>
+          <UserOutlined />
+          {record.age}
+        </Space>
+      ),
     },
     {
       title: 'Room Number',
       dataIndex: 'roomNumber',
       key: 'roomNumber',
+      render: (text: string, record: any) => (
+        <Space>
+          <HomeOutlined />
+          {record.roomNumber}
+        </Space>
+      ),
     },
     {
       title: 'T-Shirt Size',
       dataIndex: 'tShirtSize',
       key: 'tShirtSize',
+      render: (text: string, record: any) => (
+        <Space>
+          <SkinOutlined />
+          {record.tShirtSize}
+        </Space>
+      ),
     },
     {
       title: 'Team Color',
       dataIndex: 'teamColor',
       key: 'teamColor',
+      render: (text: string, record: any) => (
+        <Space>
+          <TeamOutlined />
+          {record.teamColor}
+        </Space>
+      ),
     },
     {
       title: 'Status',
@@ -225,42 +268,109 @@ export default function EventAttendeesPage() {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form form={form} layout="vertical">
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            age: '',
+            roomNumber: '',
+            tShirtSize: '',
+            teamColor: '',
+          }}
+        >
           <Form.Item
             name="firstName"
+            rules={[
+              { required: true, message: 'Please input the first name!' },
+            ]}
             label="First Name"
-            rules={[{ required: true }]}
           >
-            <Input />
+            <Input prefix={<UserOutlined />} placeholder="First Name" />
           </Form.Item>
           <Form.Item
             name="lastName"
+            rules={[{ required: true, message: 'Please input the last name!' }]}
             label="Last Name"
-            rules={[{ required: true }]}
           >
-            <Input />
+            <Input prefix={<UserOutlined />} placeholder="Last Name" />
           </Form.Item>
           <Form.Item
             name="email"
+            rules={[{ type: 'email', message: 'Please enter a valid email!' }]}
             label="Email"
-            rules={[{ required: true, type: 'email' }]}
           >
-            <Input />
+            <Input prefix={<MailOutlined />} placeholder="Email" />
           </Form.Item>
-          <Form.Item name="phoneNumber" label="Phone Number">
-            <Input />
+          <Form.Item
+            name="phoneNumber"
+            rules={[
+              { required: true, message: 'Please input the phone number!' },
+              {
+                pattern: /^[0-9]{10}$/,
+                message: 'Please enter a valid phone number!',
+              },
+            ]}
+            label="Phone Number"
+          >
+            <Input prefix={<PhoneOutlined />} placeholder="Phone Number" />
           </Form.Item>
-          <Form.Item name="age" label="Age">
-            <Input />
+          <Form.Item
+            name="age"
+            rules={[
+              { required: true, message: 'Please input the age!' },
+              {
+                pattern: /^[0-9]{1,3}$/,
+                message: 'Please enter a valid age!',
+              },
+            ]}
+            label="Age"
+          >
+            <Input prefix={<UserOutlined />} placeholder="Age" />
           </Form.Item>
-          <Form.Item name="roomNumber" label="Room Number">
-            <Input />
+          <Form.Item
+            name="roomNumber"
+            rules={[
+              { required: false, message: 'Please input the room number!' },
+              {
+                pattern: /^[0-9]{1,2}$/,
+                message: 'Please enter a valid room number!',
+              },
+            ]}
+            label="Room Number"
+          >
+            <Input prefix={<HomeOutlined />} placeholder="Room Number" />
           </Form.Item>
-          <Form.Item name="tShirtSize" label="T-Shirt Size">
-            <Input />
+          <Form.Item
+            name="tShirtSize"
+            rules={[
+              { required: false, message: 'Please select a t-shirt size!' },
+            ]}
+            label="T-Shirt Size"
+          >
+            <Select placeholder="Select a t-shirt size" allowClear>
+              <Option value="XS">XS</Option>
+              <Option value="S">S</Option>
+              <Option value="M">M</Option>
+              <Option value="L">L</Option>
+              <Option value="XL">XL</Option>
+            </Select>
           </Form.Item>
-          <Form.Item name="teamColor" label="Team Color">
-            <Input />
+          <Form.Item
+            name="teamColor"
+            label="Team Color"
+            rules={[
+              { required: false, message: 'Please select a team color!' },
+              {
+                pattern: /^[a-zA-Z]{3,}$/,
+                message: 'Please enter a valid team color!',
+              },
+            ]}
+          >
+            <Input prefix={<TeamOutlined />} placeholder="Team Color" />
           </Form.Item>
         </Form>
       </Modal>

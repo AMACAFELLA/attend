@@ -43,22 +43,33 @@ export default function ImportAttendeesPage() {
               firstName: attendeeData.firstName,
               lastName: attendeeData.lastName,
               email: attendeeData.email,
-              status: 'pending', // Assuming 'status' is a required field
-              // Add any other fields required by your API
+              phoneNumber: attendeeData.phoneNumber,
+              age: attendeeData.age,
+              roomNumber: attendeeData.roomNumber,
+              tShirtSize: attendeeData.tShirtSize,
+              teamColor: attendeeData.teamColor,
+              status: 'pending',
             }
-            return Api.Attendee.createOneByEventId(params.id, attendee)
+            return Api.Attendee.createOneByEventId(params.id, attendee).catch(
+              handleAddAttendeeError,
+            )
           })
 
           try {
+            console.log('Parsed attendees data:', attendeesToAdd)
             await Promise.all(attendeesPromises)
             enqueueSnackbar('Attendees imported successfully', {
               variant: 'success',
             })
             router.push(`/event/${params.id}/attendees`)
           } catch (error) {
-            enqueueSnackbar('Failed to add attendees', {
-              variant: 'error',
-            })
+            console.error('Error adding attendees:', error)
+            enqueueSnackbar(
+              'Failed to add attendees. Please try again later.',
+              {
+                variant: 'error',
+              },
+            )
           }
         },
         error: function (error) {
@@ -74,6 +85,13 @@ export default function ImportAttendeesPage() {
     }
 
     reader.readAsText(file)
+  }
+
+  const handleAddAttendeeError = error => {
+    console.error('Failed to add attendee:', error)
+    enqueueSnackbar('Failed to add attendee. Please try again later.', {
+      variant: 'error',
+    })
   }
 
   const handleImport = () => {

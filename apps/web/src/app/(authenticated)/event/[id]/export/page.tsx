@@ -43,17 +43,23 @@ export default function ExportAttendeesPage() {
       switch (exportFormat) {
         case 'csv':
           dataStr = attendees
-            .map(a => `${a.firstName},${a.lastName},${a.email}`)
+            .map(
+              a =>
+                `${a.firstName},${a.lastName},${a.email}, ${a.phoneNumber}, ${a.age}, ${a.roomNumber}, ${a.tShirtSize}, ${a.teamColor}, ${a.status}`,
+            )
             .join('\n')
           break
         case 'xls':
           // Simplified for demonstration; real XLS export would require a library which is not allowed per the instructions
-          dataStr = `<table>${attendees.map(a => `<tr><td>${a.firstName}</td><td>${a.lastName}</td><td>${a.email}</td></tr>`).join('')}</table>`
+          dataStr = `<table>${attendees.map(a => `<tr><td>${a.firstName}</td><td>${a.lastName}</td><td>${a.email}</td><td>${a.phoneNumber}</td><td>${a.age}</td><td>${a.roomNumber}</td><td>${a.tShirtSize}</td><td>${a.teamColor}</td><td>${a.status}</td></tr>`).join('')}</table>`
           break
         case 'pdf':
           // Simplified for demonstration; real PDF export would require a library which is not allowed per the instructions
           dataStr = attendees
-            .map(a => `Name: ${a.firstName} ${a.lastName}, Email: ${a.email}`)
+            .map(
+              a =>
+                `Name: ${a.firstName} ${a.lastName}, Email: ${a.email}, Phone: ${a.phoneNumber}, Age: ${a.age}, Room: ${a.roomNumber}, T-Shirt: ${a.tShirtSize}, Team: ${a.teamColor}, Status: ${a.status}`,
+            )
             .join('\n')
           break
         default:

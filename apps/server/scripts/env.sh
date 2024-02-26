@@ -3,7 +3,8 @@
 echo "# Required" > .env
 echo "NODE_ENV=development" >> .env
 echo "PORT=3099" >> .env
-echo "SERVER_DATABASE_URL=postgres://root:root@localhost:5442/api" >> .env
+# echo "SERVER_DATABASE_URL=postgres://root:root@localhost:5442/api" >> .env
+echo "SERVER_DATABASE_URL=postgres://postgres.nbomdlcaipsowikmktha:Notmrbeast24!@aws-0-eu-west-2.pooler.supabase.com:5432/postgres" >> .env
 echo "SERVER_AUTHENTICATION_SECRET=your-secret" >> .env
 echo "SERVER_CLIENT_BASE_URL=http://localhost:8099" >> .env
 echo "SERVER_BASE_URL=http://localhost:3099" >> .env

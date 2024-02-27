@@ -56,6 +56,9 @@ export class DatabaseConfigurationService {
     host: string
     port: number
     database: string
+    ssl?: {
+      rejectUnauthorized: boolean
+    }
   } {
     const url =
       this.configurationService.get('DATABASE_URL') ??
@@ -67,7 +70,9 @@ export class DatabaseConfigurationService {
     const port = Number(url.split(':')[3].split('/')[0])
     const database = url.split('/').slice(-1)[0]
 
-    return {
+    const isAmazon = host.includes('amazonaws.com')
+
+    const options = {
       type: 'postgres',
       host,
       username,
@@ -75,6 +80,14 @@ export class DatabaseConfigurationService {
       port,
       database,
     }
+
+    if (isAmazon) {
+      options['ssl'] = {
+        rejectUnauthorized: false,
+      }
+    }
+
+    return options as any
   }
 
   private isMigrationActive(): boolean {

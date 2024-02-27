@@ -9,7 +9,7 @@ tasks:
       sed -i "s|SERVER_BASE_URL=.*|SERVER_BASE_URL=\"$GITPOD_SERVER_BASE_URL\"|" ./apps/server/.env
       sed -i "s|API_BASE_URL=.*|API_BASE_URL=\"$GITPOD_SERVER_BASE_URL\"|" ./apps/web/.env
       sed -i "s|TOOL_BASE_URL=.*|TOOL_BASE_URL=\"$GITPOD_TOOL_BASE_URL\"|" ./apps/web/.env
-      npm install -g @marblism/studio
+      npm install -g @marblism/studio@0.1.36
 
     command: |
       marblism-studio

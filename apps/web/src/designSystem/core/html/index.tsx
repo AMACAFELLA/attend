@@ -7,6 +7,9 @@ interface Props {
 export const MrbHtml: React.FC<Props> = ({ children }: Props) => {
   return (
     <html lang="en">
+      <head>
+        <title>Attend</title>
+      </head>
       <body>{children}</body>
     </html>
   )

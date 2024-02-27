@@ -18,6 +18,7 @@ export const useAuthenticationToken = (): ReturnType => {
 
   const removeToken = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN)
+    HttpService.api.setAccessToken(null)
   }
 
   const getToken = (): string => {

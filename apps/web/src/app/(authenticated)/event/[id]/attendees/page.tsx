@@ -4,6 +4,7 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   HomeOutlined,
+  KeyOutlined,
   MailOutlined,
   PhoneOutlined,
   SearchOutlined,
@@ -98,6 +99,58 @@ export default function EventAttendeesPage() {
 
   const handleCancel = () => {
     setIsModalVisible(false)
+  }
+
+  // A function to update the key holder information for all attendees in the same room
+  const updateKeyHolderInfo = async (
+    roomNumber: string,
+    keyHolderId: string,
+  ) => {
+    try {
+      // Here you would fetch all attendees in the same room
+      const roomAttendees = attendees.filter(
+        attendee => attendee.roomNumber === roomNumber,
+      )
+      for (const attendee of roomAttendees) {
+        // Then update each attendee's keyHolder and keyHolderPhoneNumber fields
+        await Api.Attendee.updateOne(attendee.id, {
+          keyHolder:
+            keyHolderId === attendee.id
+              ? attendee.firstName + ' ' + attendee.lastName
+              : '',
+          keyHolderPhoneNumber:
+            keyHolderId === attendee.id ? attendee.phoneNumber : '',
+        })
+      }
+    } catch (error) {
+      enqueueSnackbar('Failed to update key holder info', { variant: 'error' })
+    }
+  }
+
+  // Modify the handleKeyTaken function to include logic for updating the key holder
+  const handleKeyTaken = async (
+    attendeeId: string,
+    keyTaken: boolean,
+    roomNumber: string,
+  ) => {
+    try {
+      await Api.Attendee.updateOne(attendeeId, { keyTaken: keyTaken })
+      enqueueSnackbar(`Attendee key taken updated to ${keyTaken}`, {
+        variant: 'success',
+      })
+      if (keyTaken) {
+        // If the key is taken, update the key holder info for the room
+        await updateKeyHolderInfo(roomNumber, attendeeId)
+      } else {
+        // If the key is returned, clear the key holder info for the room
+        await updateKeyHolderInfo(roomNumber, '')
+      }
+      fetchAttendees(params.id)
+    } catch (error) {
+      enqueueSnackbar('Failed to update attendee key taken', {
+        variant: 'error',
+      })
+    }
   }
 
   const filteredAttendees = attendees.filter(attendee =>
@@ -222,6 +275,36 @@ export default function EventAttendeesPage() {
           >
             Check Out
           </Button>
+        </Space>
+      ),
+    },
+    {
+      title: 'Key Taken',
+      key: 'keyTaken',
+      render: (text: string, record: any) => (
+        <Space>
+          <KeyOutlined />
+          <Button
+            onClick={() => handleKeyTaken(record.id, true, record.roomNumber)}
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => handleKeyTaken(record.id, false, record.roomNumber)}
+          >
+            No
+          </Button>
+        </Space>
+      ),
+    },
+    {
+      title: 'Key Holder',
+      key: 'keyHolder',
+      render: (text: string, record: any) => (
+        <Space>
+          <KeyOutlined />
+          {record.keyHolder}
+          <Text>Phone Number: {record.keyHolderPhoneNumber}</Text>
         </Space>
       ),
     },

@@ -10,32 +10,40 @@ export class AttendeeCreateDto {
   lastName: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   email: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   phoneNumber: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   age: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   roomNumber: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   tShirtSize: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   teamColor: string
 
   @IsString()
   @IsNotEmpty()
   status: string
+
+  @IsString()
+  @IsOptional()
+  keyTaken?: boolean
+
+  @IsString()
+  @IsOptional()
+  keyHolder?: string
 
   @IsString()
   @IsOptional()
@@ -90,6 +98,14 @@ export class AttendeeUpdateDto {
   @IsString()
   @IsOptional()
   status?: string
+
+  @IsString()
+  @IsOptional()
+  keyTaken?: boolean
+
+  @IsString()
+  @IsOptional()
+  keyHolder?: string
 
   @IsString()
   @IsOptional()

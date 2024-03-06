@@ -23,6 +23,12 @@ export class Attendee {
 
   status: string
 
+  keyTaken: boolean
+
+  keyHolder?: string
+
+  keyHolderPhoneNumber?: string
+
   eventId: string
 
   event?: Event

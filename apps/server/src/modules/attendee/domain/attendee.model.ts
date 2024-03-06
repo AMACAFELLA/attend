@@ -25,7 +25,7 @@ export class Attendee {
   @Column({})
   lastName: string
 
-  @Column({})
+  @Column({ nullable: true })
   email: string
 
   @Column({ nullable: true })
@@ -45,6 +45,15 @@ export class Attendee {
 
   @Column({})
   status: string
+
+  @Column({ nullable: true })
+  keyTaken: boolean
+
+  @Column({ nullable: true })
+  keyHolder: string
+
+  @Column({ nullable: true })
+  keyHolderPhoneNumber: string
 
   @Column({})
   eventId: string

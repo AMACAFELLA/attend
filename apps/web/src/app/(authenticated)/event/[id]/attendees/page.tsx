@@ -40,6 +40,7 @@ export default function EventAttendeesPage() {
   const [loading, setLoading] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [roomsWithKeysTaken, setRoomsWithKeysTaken] = useState([])
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -101,56 +102,62 @@ export default function EventAttendeesPage() {
     setIsModalVisible(false)
   }
 
-  // A function to update the key holder information for all attendees in the same room
-  const updateKeyHolderInfo = async (
-    roomNumber: string,
-    keyHolderId: string,
-  ) => {
-    try {
-      // Here you would fetch all attendees in the same room
-      const roomAttendees = attendees.filter(
-        attendee => attendee.roomNumber === roomNumber,
-      )
-      for (const attendee of roomAttendees) {
-        // Then update each attendee's keyHolder and keyHolderPhoneNumber fields
-        await Api.Attendee.updateOne(attendee.id, {
-          keyHolder:
-            keyHolderId === attendee.id
-              ? attendee.firstName + ' ' + attendee.lastName
-              : '',
-          keyHolderPhoneNumber:
-            keyHolderId === attendee.id ? attendee.phoneNumber : '',
-        })
+  // This function updates the key holder information for all attendees in the same room
+  const updateKeyHolderInfo = async (roomNumber, keyHolderId, keyTaken) => {
+    // Fetch all attendees in the same room
+    const roomAttendees = attendees.filter(
+      attendee => attendee.roomNumber === roomNumber,
+    )
+
+    // Find the attendee who is the key holder
+    const keyHolderAttendee = attendees.find(
+      attendee => attendee.id === keyHolderId,
+    )
+
+    for (const attendee of roomAttendees) {
+      // Update key holder information
+      let update = {}
+      if (keyTaken && attendee.id === keyHolderId) {
+        update = {
+          keyHolder: `${keyHolderAttendee.firstName} ${keyHolderAttendee.lastName}`,
+          keyHolderPhoneNumber: keyHolderAttendee.phoneNumber,
+        }
+      } else {
+        update = { keyHolder: null, keyHolderPhoneNumber: null }
       }
-    } catch (error) {
-      enqueueSnackbar('Failed to update key holder info', { variant: 'error' })
+
+      // Update the key taken status in the state
+      setAttendees(prevAttendees =>
+        prevAttendees.map(a => {
+          return a.id === attendee.id ? { ...a, ...update } : a
+        }),
+      )
+
+      // Ensuring the backend is updated accordingly
+      await Api.Attendee.updateOne(attendee.id, update)
     }
   }
 
-  // Modify the handleKeyTaken function to include logic for updating the key holder
-  const handleKeyTaken = async (
-    attendeeId: string,
-    keyTaken: boolean,
-    roomNumber: string,
-  ) => {
-    try {
-      await Api.Attendee.updateOne(attendeeId, { keyTaken: keyTaken })
-      enqueueSnackbar(`Attendee key taken updated to ${keyTaken}`, {
-        variant: 'success',
-      })
-      if (keyTaken) {
-        // If the key is taken, update the key holder info for the room
-        await updateKeyHolderInfo(roomNumber, attendeeId)
-      } else {
-        // If the key is returned, clear the key holder info for the room
-        await updateKeyHolderInfo(roomNumber, '')
-      }
-      fetchAttendees(params.id)
-    } catch (error) {
-      enqueueSnackbar('Failed to update attendee key taken', {
-        variant: 'error',
-      })
+  const handleKeyTaken = async (attendeeId, keyTaken, roomNumber) => {
+    // Find the current key holder in the room if any
+    const currentKeyHolder = attendees.find(
+      a => a.roomNumber === roomNumber && a.keyTaken,
+    )
+
+    // Update the backend and frontend state
+    await updateKeyHolderInfo(
+      roomNumber,
+      keyTaken ? attendeeId : null,
+      keyTaken,
+    )
+
+    if (!keyTaken && currentKeyHolder) {
+      // If key is being returned, update keyTaken to false for the current key holder
+      await Api.Attendee.updateOne(currentKeyHolder.id, { keyTaken: false })
     }
+
+    // Refresh the list of attendees to ensure UI is up to date
+    fetchAttendees(params.id)
   }
 
   const filteredAttendees = attendees.filter(attendee =>
@@ -286,11 +293,21 @@ export default function EventAttendeesPage() {
           <KeyOutlined />
           <Button
             onClick={() => handleKeyTaken(record.id, true, record.roomNumber)}
+            disabled={
+              !record.roomNumber ||
+              (attendees.filter(
+                attendee =>
+                  attendee.roomNumber === record.roomNumber &&
+                  attendee.keyTaken,
+              ).length > 0 &&
+                !record.keyTaken)
+            }
           >
             Yes
           </Button>
           <Button
             onClick={() => handleKeyTaken(record.id, false, record.roomNumber)}
+            disabled={!record.roomNumber}
           >
             No
           </Button>
@@ -303,8 +320,18 @@ export default function EventAttendeesPage() {
       render: (text: string, record: any) => (
         <Space>
           <KeyOutlined />
-          {record.keyHolder}
-          <Text>Phone Number: {record.keyHolderPhoneNumber}</Text>
+          {record.keyHolder ? (
+            <>
+              <Text>{record.keyHolder}</Text>
+              {record.phoneNumber ? (
+                <Text>{record.phoneNumber}</Text>
+              ) : (
+                <Text>No Phone Number</Text>
+              )}
+            </>
+          ) : (
+            <Text>No Key Holder</Text>
+          )}
         </Space>
       ),
     },

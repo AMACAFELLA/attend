@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 
 export class AttendeeCreateDto {
   @IsString()
@@ -37,7 +37,7 @@ export class AttendeeCreateDto {
   @IsNotEmpty()
   status: string
 
-  @IsString()
+  @IsBoolean()
   @IsOptional()
   keyTaken?: boolean
 
@@ -99,7 +99,7 @@ export class AttendeeUpdateDto {
   @IsOptional()
   status?: string
 
-  @IsString()
+  @IsBoolean()
   @IsOptional()
   keyTaken?: boolean
 

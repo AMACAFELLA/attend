@@ -42,7 +42,6 @@ export default function ImportAttendeesPage() {
             const attendee = {
               firstName: attendeeData.firstName,
               lastName: attendeeData.lastName,
-              email: attendeeData.email,
               phoneNumber: attendeeData.phoneNumber,
               age: attendeeData.age,
               roomNumber: attendeeData.roomNumber,
@@ -114,6 +113,14 @@ export default function ImportAttendeesPage() {
       <Paragraph>
         Use this page to import attendees for your event. Please upload a CSV or
         Excel file containing the attendees' information.
+        <br />
+        <strong>
+          Note: The file must contain the following columns: firstName,
+          lastName, phoneNumber, age, roomNumber, tShirtSize, teamColor. if
+          these columns are not present, the import will fail. if you want to
+          import attendees with different columns, please contact me.
+        </strong>
+        <br />
       </Paragraph>
       <Dragger
         name="file" // This is required by Ant Design's Dragger for proper file handling

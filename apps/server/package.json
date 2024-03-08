@@ -8,7 +8,7 @@
     "dist"
   ],
   "engines": {
-    "node": "21.6.2",
+    "node": "20.x",
     "npm": "10.1.0"
   },
   "scripts": {

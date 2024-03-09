@@ -16,6 +16,8 @@
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/multer": "^1.4.11",
     "@types/node": "^20.11.25",
     "pnpm": "^8.15.4"
   },

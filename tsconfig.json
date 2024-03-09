@@ -10,9 +10,18 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "target": "es2017",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "paths": {
       "@server/*": ["./apps/server/src/*"],
-      "@web/*": ["./apps/web/src/*"],
+      "@web/*": ["./apps/web/src/*"]
     },
+    "outDir": "./dist",
+    "typeRoots": ["./node_modules/@types"]
   },
+  "include": ["apps/server/src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

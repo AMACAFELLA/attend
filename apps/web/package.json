@@ -1,8 +1,8 @@
 {
   "name": "web",
   "version": "0.0.1",
-  "description": "attend",
-  "author": "angus macapella",
+  "description": "Marblism web",
+  "author": "marblism",
   "private": true,
   "files": [
     ".next",

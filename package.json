@@ -6,6 +6,7 @@
   "scripts": {
     "init": "pnpm install && pnpm run --filter server init ; pnpm run --filter web init",
     "dev": "pnpm run --parallel dev",
+    "heroku-prebuild": "npm install -g pnpm",
     "build": "pnpm run --filter server build && pnpm run --filter web build",
     "start": "pnpm run --parallel start",
     "ensure": "pnpm -v || npm install -g pnpm && pnpm install"

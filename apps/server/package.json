@@ -12,6 +12,7 @@
     "npm": "8.15.3"
   },
   "scripts": {
+    "postinstall": "tsc --sourceMap false",
     "init": "pnpm run docker:init ; pnpm env:init ; pnpm run database:migration:run",
     "env:init": "sh ./scripts/env.sh",
     "dev": "nest start --debug --watch",

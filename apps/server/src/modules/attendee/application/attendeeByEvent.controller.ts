@@ -28,14 +28,14 @@ export class AttendeeByEventController {
   ) {
     const queryOptions = RequestHelper.getQueryOptions(request)
 
-    const event =
+    const parent =
       await this.eventDomainFacade.findOneByIdOrFail(
         eventId,
       )
 
     const items =
       await this.attendeeDomainFacade.findManyByEvent(
-        event,
+        parent,
         queryOptions,
       )
 

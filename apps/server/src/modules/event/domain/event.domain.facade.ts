@@ -75,10 +75,10 @@ export class EventDomainFacade {
   }
 
 async findManyByUser(
-    user: User,
+    item: User,
     queryOptions: RequestHelper.QueryOptions<Event> = {},
   ): Promise<Event[]> {
-    if (!user) {
+    if (!item) {
       this.databaseHelper.invalidQueryWhere('user')
     }
 
@@ -87,7 +87,7 @@ async findManyByUser(
       orders: queryOptions.orders,
       filters: {
         ...queryOptions.filters,
-        userId: user.id,
+        userId: item.id,
       },
     }
 

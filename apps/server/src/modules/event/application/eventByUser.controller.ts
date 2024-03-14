@@ -28,14 +28,14 @@ export class EventByUserController {
   ) {
     const queryOptions = RequestHelper.getQueryOptions(request)
 
-    const user =
+    const parent =
       await this.userDomainFacade.findOneByIdOrFail(
         userId,
       )
 
     const items =
       await this.eventDomainFacade.findManyByUser(
-        user,
+        parent,
         queryOptions,
       )
 

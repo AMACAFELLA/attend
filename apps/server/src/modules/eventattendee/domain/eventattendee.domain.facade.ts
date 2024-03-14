@@ -77,10 +77,10 @@ export class EventattendeeDomainFacade {
   }
 
 async findManyByEvent(
-    event: Event,
+    item: Event,
     queryOptions: RequestHelper.QueryOptions<Eventattendee> = {},
   ): Promise<Eventattendee[]> {
-    if (!event) {
+    if (!item) {
       this.databaseHelper.invalidQueryWhere('event')
     }
 
@@ -89,7 +89,7 @@ async findManyByEvent(
       orders: queryOptions.orders,
       filters: {
         ...queryOptions.filters,
-        eventId: event.id,
+        eventId: item.id,
       },
     }
 
@@ -102,10 +102,10 @@ async findManyByEvent(
   }
 
 async findManyByAttendee(
-    attendee: Attendee,
+    item: Attendee,
     queryOptions: RequestHelper.QueryOptions<Eventattendee> = {},
   ): Promise<Eventattendee[]> {
-    if (!attendee) {
+    if (!item) {
       this.databaseHelper.invalidQueryWhere('attendee')
     }
 
@@ -114,7 +114,7 @@ async findManyByAttendee(
       orders: queryOptions.orders,
       filters: {
         ...queryOptions.filters,
-        attendeeId: attendee.id,
+        attendeeId: item.id,
       },
     }
 

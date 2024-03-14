@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigurationService } from '@server/core/configuration'
 import { Logger, LoggerService } from '@server/libraries/logger'
+import { ReadStream } from 'fs'
 import OpenaiSDK from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources'
 
 enum OpenaiModel {
   DEFAULT = 'gpt-3.5-turbo-16k',
   IMAGE = 'dall-e-3',
+  AUDIO_TO_TEXT = 'whisper-1',
+  TEXT_TO_AUDIO = 'tts-1',
 }
 
 @Injectable()
@@ -73,6 +76,27 @@ export class Openai {
     const imageUrl = this.parseResponseImage(response)
 
     return imageUrl
+  }
+
+  async fromAudioToText(readStream: ReadStream): Promise<string> {
+    const transcription = await this.api.audio.transcriptions.create({
+      file: readStream,
+      model: OpenaiModel.AUDIO_TO_TEXT,
+    })
+
+    return transcription.text
+  }
+
+  async fromTextToAudio(text: string): Promise<Buffer> {
+    const mp3 = await this.api.audio.speech.create({
+      model: OpenaiModel.TEXT_TO_AUDIO,
+      voice: 'alloy',
+      input: text,
+    })
+
+    const buffer = Buffer.from(await mp3.arrayBuffer())
+
+    return buffer
   }
 
   private buildMessages(content: string): ChatCompletionMessageParam[] {

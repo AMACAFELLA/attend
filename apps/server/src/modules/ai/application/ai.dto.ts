@@ -10,3 +10,15 @@ export class AiGenerateImageBody {
   @IsString()
   prompt: string
 }
+
+export class AiFromAudioToTextBody {
+  @IsNotEmpty()
+  @IsString()
+  url: string
+}
+
+export class AiFromTextToAudioBody {
+  @IsNotEmpty()
+  @IsString()
+  text: string
+}

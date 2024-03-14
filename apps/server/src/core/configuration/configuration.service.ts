@@ -52,9 +52,11 @@ export class ConfigurationService {
   }
 
   getBaseUrl(): string {
+    const port = this.getPort()
+
     const value = this.manager.get(
       ConfigurationServiceObject.Key.BASE_URL,
-      'http://localhost:3099',
+      `http://localhost:${port}`,
     )
 
     const valueClean = Utility.removeTrailingSlash(value)

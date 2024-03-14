@@ -115,6 +115,26 @@ export default function ImportAttendeesPage() {
         Use this page to import attendees for your event. Please upload a CSV or
         Excel file containing the attendees' information.
       </Paragraph>
+      <Paragraph>
+        <b>Note:</b> The CSV file must contain the following columns:
+        <ul>
+          <li>firstName</li>
+          <li>lastName</li>
+          <li>email</li>
+          <li>phoneNumber</li>
+          <li>age</li>
+          <li>roomNumber</li>
+          <li>tShirtSize</li>
+          <li>teamColor</li>
+        </ul>
+        <br />
+        <b>Download sample csv</b>{' '}
+        <a href="https://fastupload.io/uRrTGRfCakJxeMR/file">here</a>
+        <br />
+        firstName, lastName, phoneNumber and age needs data to be present in
+        their respective columns. email, roomNumber, tShirtSize and teamColor
+        are optional.
+      </Paragraph>
       <Dragger
         name="file" // This is required by Ant Design's Dragger for proper file handling
         fileList={fileList.map(file => ({

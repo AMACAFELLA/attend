@@ -23,9 +23,9 @@ export class AttendeeApi {
   }
 
   static createOne(
-    attendee: Partial<Attendee>,
+    values: Partial<Attendee>,
   ): Promise<Attendee> {
-    return HttpService.api.post(`/v1/attendees`, attendee)
+    return HttpService.api.post(`/v1/attendees`, values)
   }
 
   static updateOne(

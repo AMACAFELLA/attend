@@ -23,9 +23,9 @@ export class EventApi {
   }
 
   static createOne(
-    event: Partial<Event>,
+    values: Partial<Event>,
   ): Promise<Event> {
-    return HttpService.api.post(`/v1/events`, event)
+    return HttpService.api.post(`/v1/events`, values)
   }
 
   static updateOne(
